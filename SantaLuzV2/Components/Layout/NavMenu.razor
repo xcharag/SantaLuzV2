@@ -20,6 +20,25 @@
                        @bind-Expanded="expanded"
                        CustomToggle="true">
 
+            <!-- User Card (Top) -->
+            <FluentCard Class="@($"user-card {(expanded ? "expanded" : "collapsed")}")">
+                <div class="user-card-inner">
+                    <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8402d15866ca7e029c59c61cfa" alt="Usuario" class="user-avatar" />
+                    <div class="user-info">
+                        <div class="user-name-row">
+                            <span class="user-name">Juan Pérez</span>
+                            <FluentIcon Value="@(new Icons.Filled.Size20.Settings())"
+                                        Color="Color.Custom"
+                                        CustomColor="@ThemeColor.Lime500.ToHex()"
+                                        Class="user-icon" />
+                        </div>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                </div>
+            </FluentCard>
+
+            <FluentDivider Class="menu-divider-top" />
+
             @foreach (var item in _navItems)
             {
                 if (item.IsGroup)
@@ -61,10 +80,14 @@
                 }
             }
 
-            <FluentDivider />
+            <FluentDivider Class="menu-divider-bottom" />
 
-            <FluentCard Class="custom-card">
-                <p>Tipo de Cambio USD: <span>6.96 Bs</span></p>
+            <!-- Tipo de Cambio Card (Hidden when collapsed) -->
+            <FluentCard Class="@($"exchange-card {(expanded ? "expanded" : "collapsed")}")">
+                <div class="exchange-line">
+                    <span class="label">Tipo de Cambio USD</span>
+                    <span class="value">@TipoCambio.ToString("0.00") Bs</span>
+                </div>
             </FluentCard>
         </FluentNavMenu>
     </nav>
@@ -77,14 +100,6 @@
         transition: background 0.2s;
     }
 
-    .custom-card{
-        background: @ThemeColor.BlurCeleste.ToHex() !important;
-    }
-
-    .custom-nav-item .positioning-region {
-        color: @ThemeColor.White.ToHex();
-    }
-
     .sitenav {
         padding-top: 5px;
         padding-left: 10px;
@@ -92,10 +107,133 @@
         gap: 10px;
     }
 
-    .custom-nav-item .fluent-nav-link .positioning-region {
-        background: none !important;
+    /* User Card */
+    .user-card {
+        background: @ThemeColor.BlurCeleste30.ToHex();
+        border: 1px solid @ThemeColor.BlurCeleste.ToHex();
+        padding: 10px;
+        margin: 4px 0 10px 0;
+        border-radius: 10px;
+        transition: all .25s ease;
     }
 
+    /* Collapsed: remove background & tighten */
+    .user-card.collapsed {
+        background: transparent;
+        border: none;
+        padding: 4px;
+        margin: 4px 0 6px 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .user-card .user-card-inner {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: gap .25s ease;
+    }
+
+    .user-card.collapsed .user-card-inner {
+        gap: 0;
+    }
+
+    .user-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid @ThemeColor.Lime500.ToHex();
+        background: @ThemeColor.Navy900.ToHex();
+        transition: all .25s ease;
+    }
+
+    /* Smaller avatar when collapsed */
+    .user-card.collapsed .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-width: 1px;
+        filter: drop-shadow(0 0 2px @ThemeColor.Navy900.ToHex());
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+        min-width: 0;
+    }
+
+    .user-card.collapsed .user-info,
+    .user-card.collapsed .user-icon {
+        display: none;
+    }
+
+    .user-name-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: @ThemeColor.White.ToHex();
+    }
+
+    .user-role {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        color: @ThemeColor.White.ToHex();
+    }
+
+    .user-icon svg {
+        width: 18px;
+        height: 18px;
+        display: block;
+    }
+
+    /* Exchange Card */
+    .exchange-card {
+        background: @ThemeColor.BlurCeleste30.ToHex();
+        border: 1px solid @ThemeColor.BlurCeleste.ToHex();
+        padding: 8px 10px;
+        border-radius: 8px;
+        font-size: 0.80rem;
+        line-height: 1.1;
+        margin-top: 10px;
+        transition: opacity .2s ease;
+    }
+
+    .exchange-card .exchange-line {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: @ThemeColor.White.ToHex();
+        font-weight: 500;
+    }
+
+    .exchange-card .value {
+        color: @ThemeColor.Lime500.ToHex();
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .exchange-card.collapsed {
+        display: none;
+    }
+
+    /* Dividers spacing */
+    .menu-divider-top {
+        margin: 10px 0 6px 0;
+    }
+
+    .menu-divider-bottom {
+        margin: 12px 0 4px 0;
+    }
+
+    /* Existing styles (kept) */
+    .custom-nav-item .positioning-region {
+        color: @ThemeColor.White.ToHex();
+    }
+
+    .custom-nav-item .fluent-nav-link .positioning-region,
     .fluent-nav-item .positioning-region {
         background: none !important;
     }
@@ -124,7 +262,6 @@
         fill: @ThemeColor.Lime500.ToHex() !important;
     }
 
-    /* Fix B (fallback force) – keep temporarily while testing */
     .custom-nav-item.fluent-nav-group .fluent-icon,
     .custom-nav-item.fluent-nav-group .fluent-icon svg {
         color: @ThemeColor.Lime500.ToHex() !important;
@@ -134,6 +271,7 @@
 
 @code {
     private bool expanded = true;
+    private double TipoCambio = 6.96;
 
     private sealed record NavItem(
         int id,
