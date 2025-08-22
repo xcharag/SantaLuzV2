@@ -16,14 +16,12 @@
     --color-amber-400: #FBBF24;
     --color-gray-300: #BCC4D0;
     --color-red-600: #DC2626;
-    
     --color-blur-celeste: rgba(133, 193, 233, 0.15);
 
     /* Typography families */
     --font-title: 'Inconsolata', monospace;
     --font-subtitle: 'Space Grotesk', 'Segoe UI', sans-serif;
     --font-content: 'Spectral', Georgia, serif;
-
     /* Font sizes (px) mapped to provided style names */
     --fs-title-web: 36px;
     --fs-subtitle-web: 24px;

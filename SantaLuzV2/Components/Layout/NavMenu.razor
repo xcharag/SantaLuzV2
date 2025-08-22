@@ -27,7 +27,7 @@
                     <FluentNavGroup Title="@item.Text"
                                     Tooltip="@item.Tooltip"
                                     Icon="@(item.Icon)"
-                                    IconColor="@Color.Custom"
+                                    IconColor="@Color.FillInverse"
                                     CustomColor="@ThemeColor.Lime500.ToHex()"
                                     Class="custom-nav-item">
                         @foreach (var child in item.Children!)
@@ -84,6 +84,14 @@
 
     .fluent-nav-item .positioning-region {
         background: none !important;
+    }
+
+    .fluent-nav-item .fluent-nav-link .positioning-region .content-region .fluent-nav-icon {
+        fill: @ThemeColor.Lime500.ToHex() !important;
+    }
+
+    .fluent-nav-item .fluent-nav-link .positioning-region .content-region .expand-collapse-button .fluent-nav-expand-icon {
+        fill: @ThemeColor.Lime500.ToHex() !important;
     }
 
     .custom-nav-item .positioning-region:hover {
