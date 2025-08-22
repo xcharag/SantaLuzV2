@@ -25,6 +25,7 @@
                 if (item.IsGroup)
                 {
                     <FluentNavGroup Title="@item.Text"
+                                    Id="@item.id.ToString()"
                                     Tooltip="@item.Tooltip"
                                     Icon="@(item.Icon)"
                                     IconColor="@Color.FillInverse"
@@ -33,6 +34,7 @@
                         @foreach (var child in item.Children!)
                         {
                             <FluentNavLink Href="@child.Href"
+                                           Id="@child.id.ToString()"
                                            Match="NavLinkMatch.All"
                                            Icon="@(child.Icon)"
                                            IconColor="@Color.Custom"
@@ -47,6 +49,7 @@
                 else
                 {
                     <FluentNavLink Href="@item.Href"
+                                   Id="@item.id.ToString()"
                                    Match="NavLinkMatch.All"
                                    Icon="@(item.Icon)"
                                    IconColor="@Color.Custom"
@@ -57,6 +60,12 @@
                     </FluentNavLink>
                 }
             }
+
+            <FluentDivider />
+
+            <FluentCard Class="custom-card">
+                <p>Tipo de Cambio USD: <span>6.96 Bs</span></p>
+            </FluentCard>
         </FluentNavMenu>
     </nav>
 </div>
@@ -68,6 +77,10 @@
         transition: background 0.2s;
     }
 
+    .custom-card{
+        background: @ThemeColor.BlurCeleste.ToHex() !important;
+    }
+
     .custom-nav-item .positioning-region {
         color: @ThemeColor.White.ToHex();
     }
@@ -76,6 +89,7 @@
         padding-top: 5px;
         padding-left: 10px;
         padding-right: 10px;
+        gap: 10px;
     }
 
     .custom-nav-item .fluent-nav-link .positioning-region {
@@ -122,6 +136,7 @@
     private bool expanded = true;
 
     private sealed record NavItem(
+        int id,
         string Text,
         string Tooltip,
         Icon Icon,
@@ -133,22 +148,23 @@
 
     private readonly IReadOnlyList<NavItem> _navItems =
     [
-        new NavItem("Panel de Control", "Panel de Control", new Icons.Filled.Size20.Clover(), "/"),
-        new NavItem("Ventas", "Ventas", new Icons.Filled.Size20.Cart(),
+        new NavItem(1,"Panel de Control", "Panel de Control", new Icons.Filled.Size20.Clover(), "/"),
+        new NavItem(2,"Ventas", "Ventas", new Icons.Filled.Size20.Cart(),
             Children:
             [
-                new NavItem("Cotizaciones", "Cotizaciones", new Icons.Filled.Size20.DocumentFlowchart(), "/ventas/cotizaciones"),
-                new NavItem("Reservas", "Reservas", new Icons.Filled.Size20.CalendarLtr(), "/ventas/reservas"),
-                new NavItem("Contratos", "Contratos", new Icons.Filled.Size20.Signature(), "/ventas/contratos")
+                new NavItem(3,"Cotizaciones", "Cotizaciones", new Icons.Filled.Size20.DocumentFlowchart(), "/ventas/cotizaciones"),
+                new NavItem(4,"Reservas", "Reservas", new Icons.Filled.Size20.CalendarLtr(), "/ventas/reservas"),
+                new NavItem(5,"Contratos", "Contratos", new Icons.Filled.Size20.Signature(), "/ventas/contratos")
             ]),
-        new NavItem("Caja", "Caja", new Icons.Filled.Size20.Money(), "/caja"),
-        new NavItem("Proyectos", "Inventario", new Icons.Filled.Size20.BoxMultiple(), "/proyectos"),
-        new NavItem("Personas", "Personas", new Icons.Filled.Size20.PeopleCommunity(),
+        new NavItem(6,"Caja", "Caja", new Icons.Filled.Size20.Money(), "/caja"),
+        new NavItem(7,"Proyectos", "Inventario", new Icons.Filled.Size20.BoxMultiple(), "/proyectos"),
+        new NavItem(8,"Personas", "Personas", new Icons.Filled.Size20.PeopleCommunity(),
             Children:
             [
-                new NavItem("Trabajadores", "Trabajadores", new Icons.Filled.Size20.ShareScreenPersonP(), "/ventas/personal"),
-                new NavItem("Clientes", "Clientes", new Icons.Filled.Size20.PersonMoney(), "/ventas/clientes"),
+                new NavItem(9,"Trabajadores", "Trabajadores", new Icons.Filled.Size20.ShareScreenPersonP(), "/ventas/personal"),
+                new NavItem(10,"Clientes", "Clientes", new Icons.Filled.Size20.PersonMoney(), "/ventas/clientes"),
             ]),
-        new NavItem("Configuracion", "Configuracion", new Icons.Filled.Size20.Settings(), "/configuracion")
+        new NavItem(11,"Configuracion", "Configuracion", new Icons.Filled.Size20.Settings(), "/configuracion"),
+        new NavItem(12,"Cerrar Sesion", "Cerrar Sesion", new Icons.Filled.Size20.SignOut(), "/cerrar-sesion")
     ];
 }
