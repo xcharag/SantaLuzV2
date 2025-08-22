@@ -1,36 +1,110 @@
 /* wwwroot/theme.css */
-/* Central Fluent palette using FAST/Fluent design tokens.
-   Switch themes by changing the class (theme-light | theme-dark) on a wrapper. */
+/* Core theme tokens */
+
+:root {
+    /* Brand palette (from provided palette) */
+    --color-navy-900: #1A5276;
+    --color-navy-700: #2980B9;
+    --color-navy-400: #85C1E9;
+    --color-olive-200: #E6E49F;
+    --color-lime-500: #8FC440;
+    --color-sky-50: #E1F8FF;
+    --color-teal-200: #A7E0DA;
+    --color-sand-200: #FBE8B8;
+    --color-white: #FFFFF0;
+    --color-green-500: #22C55E;
+    --color-amber-400: #FBBF24;
+    --color-gray-300: #BCC4D0;
+    --color-red-600: #DC2626;
+    
+    --color-blur-celeste: rgba(133, 193, 233, 0.15);
+
+    /* Typography families */
+    --font-title: 'Inconsolata', monospace;
+    --font-subtitle: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-content: 'Spectral', Georgia, serif;
+
+    /* Font sizes (px) mapped to provided style names */
+    --fs-title-web: 36px;
+    --fs-subtitle-web: 24px;
+    --fs-subtitle-sn-web: 24px; /* semantic/strong variant */
+    --fs-normal-web: 14px;
+    --fs-disclaimer-web: 12px;
+    --fs-title-content: 24px;
+    --fs-subtitle-content: 18px;
+    --fs-subtitle2-content: 14px;
+    /* Line-height (auto in design -> approximate ratios) */
+    --lh-tight: 1.15;
+    --lh-normal: 1.35;
+    --lh-relaxed: 1.5;
+    /* Weight helpers */
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+    /* Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    /* Elevation (simple) */
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.15);
+    --shadow-md: 0 4px 10px -2px rgba(0,0,0,.3);
+}
 
 .theme-light {
-    /* Light mode */
-    --base-layer-luminance: 1;                /* 0 for dark, 1 for light */
-    --accent-base-color: #0F6CBD;             /* Primary brand color */
-    --neutral-base-color: #6B6B6B;            /* Neutral (grays) seed */
-
-    /* Optional: app-level brand helpers */
-    --brand-primary: var(--accent-base-color);
+    --base-layer-luminance: 1;
+    --accent-base-color: var(--color-lime-500);
+    --neutral-base-color: #6B6B6B;
+    --brand-primary: var(--color-navy-900);
     --brand-surface: var(--neutral-layer-1, #ffffff);
     --brand-on-primary: #ffffff;
 }
 
 .theme-dark {
-    /* Dark mode */
     --base-layer-luminance: 0;
-    --accent-base-color: #2B88D8;
+    --accent-base-color: var(--color-navy-700);
     --neutral-base-color: #888888;
-
     --brand-primary: var(--accent-base-color);
-    --brand-surface: var(--neutral-layer-1, #1f1f1f);
+    --brand-surface: var(--neutral-layer-1, #0f0f11);
     --brand-on-primary: #ffffff;
+
+    /* Dark surfaces (custom) */
+    --surface-bg: #0f0f11;
+    --surface-panel: var(--color-navy-900);
+    --surface-panel-alt: var(--color-navy-700);
+    --surface-panel-muted: rgba(255,255,255,0.04);
+    --text-primary: #f5f7fa;
+    --text-secondary: #d5dde5;
+    --text-accent: var(--color-lime-500);
 }
 
-/* Optional helpers for icons you place next to text */
+body {
+    font-family: var(--font-content);
+    background: var(--surface-bg);
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* Typography utility classes */
+.t-title        { font-family: var(--font-title); font-size: var(--fs-title-web); line-height: var(--lh-tight); font-weight: var(--fw-bold); }
+.t-subtitle     { font-family: var(--font-subtitle); font-size: var(--fs-subtitle-web); line-height: var(--lh-tight); font-weight: var(--fw-semibold); }
+.t-subtitle-sn  { font-family: var(--font-subtitle); font-size: var(--fs-subtitle-sn-web); font-weight: var(--fw-bold); }
+.t-normal       { font-family: var(--font-content); font-size: var(--fs-normal-web); line-height: var(--lh-relaxed); font-weight: var(--fw-regular); }
+.t-normal-em    { font-family: var(--font-content); font-size: var(--fs-normal-web); font-weight: var(--fw-semibold); }
+.t-disclaimer   { font-family: var(--font-content); font-size: var(--fs-disclaimer-web); opacity: .8; }
+.t-disclaimer-em{ font-family: var(--font-content); font-size: var(--fs-disclaimer-web); font-weight: var(--fw-semibold); }
+.t-title-content{ font-family: var(--font-title); font-size: var(--fs-title-content); font-weight: var(--fw-semibold); }
+.t-subtitle-content { font-family: var(--font-subtitle); font-size: var(--fs-subtitle-content); font-weight: var(--fw-medium); }
+.t-subtitle2-content{ font-family: var(--font-subtitle); font-size: var(--fs-subtitle2-content); font-weight: var(--fw-medium); }
+
 .nav-icon {
     width: 20px;
     height: 20px;
     vertical-align: middle;
     margin-right: 8px;
-    /* If your SVGs use fill="currentColor", they will adopt the text color */
     fill: currentColor;
+}
+
+.positioning-region {
+    background: var(--color-blur-celeste);
 }

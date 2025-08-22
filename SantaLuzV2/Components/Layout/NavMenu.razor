@@ -1,19 +1,142 @@
-﻿@rendermode InteractiveServer
+﻿@using SantaLuzV2.Theme
+@using Microsoft.AspNetCore.Components.Routing
+@rendermode InteractiveServer
 
-<div class="navmenu">
-    <input type="checkbox" title="Menu expand/collapse toggle" id="navmenu-toggle" class="navmenu-icon"/>
-    <label for="navmenu-toggle" class="navmenu-icon">
-        <FluentIcon Value="@(new Icons.Regular.Size20.Navigation())" Color="Color.Fill"/>
+<div class="navmenu" style="@ThemeColor.Navy900.ToBackGround()">
+    <input type="checkbox" title="Menu expand/collapse toggle" id="navmenu-toggle" class="navmenu-icon custom-nav-item" />
+        <label for="navmenu-toggle" class="navmenu-icon custom-nav-item">
+        <FluentIcon
+            Value="@(new Icons.Filled.Size20.Navigation())"
+            Color="Color.Custom"
+            CustomColor="@ThemeColor.Lime500.ToHex()" />
     </label>
+
     <nav class="sitenav" aria-labelledby="main-menu">
-        <FluentNavMenu Id="main-menu" Collapsible="true" Width="250" Title="Navigation menu" @bind-Expanded="expanded" CustomToggle="true">
-            <FluentNavLink Href="/" Match="NavLinkMatch.All" Icon="@(new Icons.Regular.Size20.Home())" IconColor="Color.Accent">Home</FluentNavLink>
-            <FluentNavLink Href="counter" Icon="@(new Icons.Regular.Size20.NumberSymbolSquare())" IconColor="Color.Accent">Counter</FluentNavLink>
-            <FluentNavLink Href="weather" Icon="@(new Icons.Regular.Size20.WeatherPartlyCloudyDay())" IconColor="Color.Accent">Weather</FluentNavLink>
+        <FluentNavMenu Id="main-menu"
+                       Collapsible="true"
+                       Width="250"
+                       CollapsedChildNavigation ="true"
+                       Title="Navigation menu"
+                       @bind-Expanded="expanded"
+                       CustomToggle="true">
+
+            @foreach (var item in _navItems)
+            {
+                if (item.IsGroup)
+                {
+                    <FluentNavGroup Title="@item.Text"
+                                    Tooltip="@item.Tooltip"
+                                    Icon="@(item.Icon)"
+                                    IconColor="@Color.Custom"
+                                    CustomColor="@ThemeColor.Lime500.ToHex()"
+                                    Class="custom-nav-item">
+                        @foreach (var child in item.Children!)
+                        {
+                            <FluentNavLink Href="@child.Href"
+                                           Match="NavLinkMatch.All"
+                                           Icon="@(child.Icon)"
+                                           IconColor="@Color.Custom"
+                                           CustomColor="@ThemeColor.Lime500.ToHex()"
+                                           Tooltip="@child.Tooltip"
+                                           Class="custom-nav-item">
+                                @child.Text
+                            </FluentNavLink>
+                        }
+                    </FluentNavGroup>
+                }
+                else
+                {
+                    <FluentNavLink Href="@item.Href"
+                                   Match="NavLinkMatch.All"
+                                   Icon="@(item.Icon)"
+                                   IconColor="@Color.Custom"
+                                   CustomColor="@ThemeColor.Lime500.ToHex()"
+                                   Tooltip="@item.Tooltip"
+                                   Class="custom-nav-item">
+                        @item.Text
+                    </FluentNavLink>
+                }
+            }
         </FluentNavMenu>
     </nav>
 </div>
 
+<style>
+    .custom-nav-item {
+        color: @ThemeColor.White.ToHex();
+        border-radius: 6px;
+        margin: 2px 0;
+        transition: background 0.2s;
+    }
+
+    .sitenav {
+        padding-top: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .custom-nav-item .fluent-nav-link .positioning-region {
+        background: none !important;
+    }
+
+    .fluent-nav-item .positioning-region {
+        background: none !important;
+    }
+
+    .custom-nav-item .positioning-region:hover {
+        background: @ThemeColor.BlurCeleste30.ToHex() !important;
+    }
+
+    .custom-nav-item .active .positioning-region {
+        background: @ThemeColor.BlurCeleste.ToHex() !important;
+    }
+
+    .custom-nav-item .fluent-nav-link.active .positioning-region::before {
+        background: @ThemeColor.Lime500.ToHex() !important;
+    }
+
+    #main-menu-expander svg {
+        fill: @ThemeColor.Lime500.ToHex() !important;
+    }
+</style>
+
 @code {
     private bool expanded = true;
+
+    // Navigation data model
+    private sealed record NavItem(
+        string Text,
+        string Tooltip,
+        Icon Icon,
+        string? Href = null,
+        IReadOnlyList<NavItem>? Children = null)
+    {
+        public bool IsGroup => Children is { Count: > 0 };
+    }
+
+    // Centralized nav definition
+    private readonly IReadOnlyList<NavItem> _navItems =
+    [
+        new NavItem(
+            Text: "Panel de Control",
+            Tooltip: "Panel de Control",
+            Icon: new Icons.Filled.Size20.Clover(),
+            Href: "/"),
+
+        new NavItem(
+            Text: "Ventas",
+            Tooltip: "Ventas",
+            Icon:  new Icons.Filled.Size20.Cart(),
+            Children:
+            [
+                new NavItem("Cotizaciones", "Cotizaciones", new Icons.Filled.Size20.DocumentFlowchart(), "/cotizaciones"),
+                new NavItem("Reservas", "Reservas", new Icons.Filled.Size20.CalendarLtr(), "/reservas"),
+                new NavItem("Contratos", "Contratos", new Icons.Filled.Size20.Signature(), "/contratos")
+            ]),
+
+        new NavItem("Caja", "Caja", new Icons.Filled.Size20.Money(), "/caja"),
+        new NavItem("Proyectos", "Inventario", new Icons.Filled.Size20.BoxMultiple(), "/proyectos"),
+        new NavItem("Personas", "Personas", new Icons.Filled.Size20.PeopleCommunity(), "/personas"),
+        new NavItem("Configuracion", "Configuracion", new Icons.Filled.Size20.Settings(), "/configuracion")
+    ];
 }
