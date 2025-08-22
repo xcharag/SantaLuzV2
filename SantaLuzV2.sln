@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36301.6 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SantaLuzV2", "SantaLuzV2\SantaLuzV2.csproj", "{89528776-C53F-4C31-B191-914963357036}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SantaLuzV2.Back", "SantaLuzV2.Back\SantaLuzV2.Back.csproj", "{8979467E-78ED-4B96-80D7-C19412284609}"
@@ -18,5 +21,8 @@ Global
 		{8979467E-78ED-4B96-80D7-C19412284609}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8979467E-78ED-4B96-80D7-C19412284609}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8979467E-78ED-4B96-80D7-C19412284609}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

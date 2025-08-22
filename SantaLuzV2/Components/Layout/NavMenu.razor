@@ -4,7 +4,7 @@
 
 <div class="navmenu" style="@ThemeColor.Navy900.ToBackGround()">
     <input type="checkbox" title="Menu expand/collapse toggle" id="navmenu-toggle" class="navmenu-icon custom-nav-item" />
-        <label for="navmenu-toggle" class="navmenu-icon custom-nav-item">
+    <label for="navmenu-toggle" class="navmenu-icon custom-nav-item">
         <FluentIcon
             Value="@(new Icons.Filled.Size20.Navigation())"
             Color="Color.Custom"
@@ -15,8 +15,8 @@
         <FluentNavMenu Id="main-menu"
                        Collapsible="true"
                        Width="250"
-                       CollapsedChildNavigation ="true"
-                       Title="Navigation menu"
+                       CollapsedChildNavigation="true"
+                       Title="Menu de Navegacion"
                        @bind-Expanded="expanded"
                        CustomToggle="true">
 
@@ -63,10 +63,13 @@
 
 <style>
     .custom-nav-item {
-        color: @ThemeColor.White.ToHex();
         border-radius: 6px;
         margin: 2px 0;
         transition: background 0.2s;
+    }
+
+    .custom-nav-item .positioning-region {
+        color: @ThemeColor.White.ToHex();
     }
 
     .sitenav {
@@ -98,12 +101,18 @@
     #main-menu-expander svg {
         fill: @ThemeColor.Lime500.ToHex() !important;
     }
+
+    /* Fix B (fallback force) – keep temporarily while testing */
+    .custom-nav-item.fluent-nav-group .fluent-icon,
+    .custom-nav-item.fluent-nav-group .fluent-icon svg {
+        color: @ThemeColor.Lime500.ToHex() !important;
+        fill: @ThemeColor.Lime500.ToHex() !important;
+    }
 </style>
 
 @code {
     private bool expanded = true;
 
-    // Navigation data model
     private sealed record NavItem(
         string Text,
         string Tooltip,
@@ -114,29 +123,24 @@
         public bool IsGroup => Children is { Count: > 0 };
     }
 
-    // Centralized nav definition
     private readonly IReadOnlyList<NavItem> _navItems =
     [
-        new NavItem(
-            Text: "Panel de Control",
-            Tooltip: "Panel de Control",
-            Icon: new Icons.Filled.Size20.Clover(),
-            Href: "/"),
-
-        new NavItem(
-            Text: "Ventas",
-            Tooltip: "Ventas",
-            Icon:  new Icons.Filled.Size20.Cart(),
+        new NavItem("Panel de Control", "Panel de Control", new Icons.Filled.Size20.Clover(), "/"),
+        new NavItem("Ventas", "Ventas", new Icons.Filled.Size20.Cart(),
             Children:
             [
-                new NavItem("Cotizaciones", "Cotizaciones", new Icons.Filled.Size20.DocumentFlowchart(), "/cotizaciones"),
-                new NavItem("Reservas", "Reservas", new Icons.Filled.Size20.CalendarLtr(), "/reservas"),
-                new NavItem("Contratos", "Contratos", new Icons.Filled.Size20.Signature(), "/contratos")
+                new NavItem("Cotizaciones", "Cotizaciones", new Icons.Filled.Size20.DocumentFlowchart(), "/ventas/cotizaciones"),
+                new NavItem("Reservas", "Reservas", new Icons.Filled.Size20.CalendarLtr(), "/ventas/reservas"),
+                new NavItem("Contratos", "Contratos", new Icons.Filled.Size20.Signature(), "/ventas/contratos")
             ]),
-
         new NavItem("Caja", "Caja", new Icons.Filled.Size20.Money(), "/caja"),
         new NavItem("Proyectos", "Inventario", new Icons.Filled.Size20.BoxMultiple(), "/proyectos"),
-        new NavItem("Personas", "Personas", new Icons.Filled.Size20.PeopleCommunity(), "/personas"),
+        new NavItem("Personas", "Personas", new Icons.Filled.Size20.PeopleCommunity(),
+            Children:
+            [
+                new NavItem("Trabajadores", "Trabajadores", new Icons.Filled.Size20.ShareScreenPersonP(), "/ventas/personal"),
+                new NavItem("Clientes", "Clientes", new Icons.Filled.Size20.PersonMoney(), "/ventas/clientes"),
+            ]),
         new NavItem("Configuracion", "Configuracion", new Icons.Filled.Size20.Settings(), "/configuracion")
     ];
 }
