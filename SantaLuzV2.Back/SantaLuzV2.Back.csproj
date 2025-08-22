@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Context\" />
+      <Folder Include="Implementation\" />
+      <Folder Include="Interfaces\" />
+      <Folder Include="Module\Autenticacion\Context\" />
+      <Folder Include="Module\Autenticacion\Data\Entites\" />
+      <Folder Include="Module\Autenticacion\Implementation\" />
+      <Folder Include="Module\Autenticacion\Interfaces\" />
+      <Folder Include="Module\BienesRaices\Context\" />
+      <Folder Include="Module\BienesRaices\Data\Entites\" />
+      <Folder Include="Module\BienesRaices\Implementation\" />
+      <Folder Include="Module\BienesRaices\Interfaces\" />
+      <Folder Include="Module\Contabilidad\Context\" />
+      <Folder Include="Module\Contabilidad\Data\Entites\" />
+      <Folder Include="Module\Contabilidad\Implementation\" />
+      <Folder Include="Module\Contabilidad\Interfaces\" />
+    </ItemGroup>
+
+</Project>

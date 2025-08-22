@@ -1,0 +1,36 @@
+/* wwwroot/theme.css */
+/* Central Fluent palette using FAST/Fluent design tokens.
+   Switch themes by changing the class (theme-light | theme-dark) on a wrapper. */
+
+.theme-light {
+    /* Light mode */
+    --base-layer-luminance: 1;                /* 0 for dark, 1 for light */
+    --accent-base-color: #0F6CBD;             /* Primary brand color */
+    --neutral-base-color: #6B6B6B;            /* Neutral (grays) seed */
+
+    /* Optional: app-level brand helpers */
+    --brand-primary: var(--accent-base-color);
+    --brand-surface: var(--neutral-layer-1, #ffffff);
+    --brand-on-primary: #ffffff;
+}
+
+.theme-dark {
+    /* Dark mode */
+    --base-layer-luminance: 0;
+    --accent-base-color: #2B88D8;
+    --neutral-base-color: #888888;
+
+    --brand-primary: var(--accent-base-color);
+    --brand-surface: var(--neutral-layer-1, #1f1f1f);
+    --brand-on-primary: #ffffff;
+}
+
+/* Optional helpers for icons you place next to text */
+.nav-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 8px;
+    /* If your SVGs use fill="currentColor", they will adopt the text color */
+    fill: currentColor;
+}
